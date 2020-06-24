@@ -206,16 +206,17 @@ def citation(codigo):
 #Funcion que coge el codigo de identificacion del articulo de bioinformatics y devuelve todos los articulos que referencian a este
 	nombre_archivo = codigo+"_ref.html"
 	try:
-		file_cross = open("/home/ana/urbion/TFG/ArchivosBioinformatics/"+nombre_archivo, "r")
+		file_cross = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo, "r")
 	except:
-		excepts.write(str(nombre_archivo)+"\tNo se da el archivo de las referencias\n")
-		return("citaciones")
+     url = "https://academic.oup.com/bioinformatics/crossref-citedby/"+codigo
+		os.system(wget_com+url+'" -O '+"/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo)
+		file_cross = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo, "r")
+		time.sleep(random.randrange(25, 85))
 
-	if os.stat("/home/ana/urbion/TFG/ArchivosBioinformatics/"+nombre_archivo).st_size == 0:#Esta vacio el HTML
+	if os.stat("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo).st_size == 0:#Esta vacio el HTML
 		file_cross.close()
 		vacios.write(url+"\n")
 		return ("El HTML estaba vacio")
-	
 	
 	soup3 = BS(file_cross, 'lxml')
 	#Sacamos los datos de esta pagina
@@ -226,19 +227,40 @@ def citation(codigo):
 		paginacion = soup3.find("div", class_ = "pageNumbers al-pageNumbers")
 		numero_paginas = paginacion.find_all("a")
 		numero = numero_paginas[-1]["data-clicked-page"]
-		for i in range(2, int(numero)+1):
-			nombre_archivo = codigo+"_"+str(i)+"_ref.html"
-			try:
-				file_cross = open("/home/ana/urbion/TFG/ArchivosBioinformatics/"+nombre_archivo, "r")
-			except:
-				excepts.write(str(nombre_archivo)+"\tno se ha dado la pagina de las citaciones\n")
-				return("citaciones")
+		while control == True:
+			for i in range(numero_inicial, numero+1):
+				nombre_archivo = codigo+"_"+str(i)+"_ref.html"
+				try:
+					file_cross = open("/home/amnhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo, "r")
+				except:
+					os.system(wget_com+url+'" -O '+"/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+nombre_archivo)
+             file_cross = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+archivo, "r")	
 
-			soup = BS(file_cross, 'lxml')
-			lista = extraccion(soup)
-			for referencia in lista:
-				citaciones.append(referencia)
-			file_cross.close()
+				soup = BS(file_cross, 'lxml')
+				lista = extraccion(soup)
+				for referencia in lista:
+					citaciones.append(referencia)
+				#Hay veces que hay mas paginas de las que paracen al principio 
+				paginacion = soup.find("div", class_ = "pageNumbers al-pageNumbers")
+				numero_paginas = paginacion.find_all("a")
+				numero_nuevo = int(numero_paginas[-1]["data-clicked-page"])
+				if numero == numero_nuevo:
+					if i == numero:#Hemos llegado al final de las paginas de citaciones
+						file_cross.close()
+						control = False
+						break
+					else:
+						file_cross.close()
+						continue
+				elif numero != numero_nuevo:
+					if numero_nuevo < numero and i == numero:
+						file_cross.close()
+						control = False
+					else:
+						numero_inicial = i+1 #Comenzamos desde la siguiente pagina de las referencias
+						numero = numero_nuevo
+						file_cross.close()
+						break
 	except: #Significa que solo hay una pagina de referencias
 		pass	
 	return citaciones
@@ -255,7 +277,7 @@ def datos(url):
 		file_in = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+codigo+".html", "r")
 		time.sleep(random.randrange(25,85))
 	
-	if os.stat("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+codigo+".html").st_size == 0:
+	if os.stat("/home/amanhel/Documents/TFG/ArchivosNucleic/"+codigo+".html").st_size == 0:
 		file_in.close()
 		vacios.write(url+"\n")
 		return ([url,"El HTML estaba vacio","-","-","-","-","-","-"])	
@@ -302,13 +324,13 @@ for tupla in volumenes: #Recorremos los volumenes
 		archivo = "Vol"+str(vol)+"Issue"+str(issue)+".html"
         
 		try:#Control para no descargar dos veces el archivo
-			file_vol = open("/home/amanhel/prueba/Documents/TFG/ArchivosBioinformatics/"+archivo,"r")
+			file_vol = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+archivo,"r")
 		except:#Descargamos el archivo que no consta en la carpeta
-			os.system(wget_com+url+'" -O '+"/home/amanhel/prueba/Documents/TFG/ArchivosBioinformatics/"+archivo)
-			file_vol = open("/home/amanhel/prueba/Documents/TFG/ArchivosBioinformatics/"+archivo, "r")	
+			os.system(wget_com+url+'" -O '+"/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+archivo)
+			file_vol = open("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+archivo, "r")	
 
 		#Cogemos los articulos de Applications Notes de cada issue
-		if os.stat("/home/amanhel/prueba/Documents/TFG/ArchivosBioinformatics/"+archivo).st_size == 0: #Caso de que el HTML este vacio por errores de conexion
+		if os.stat("/home/amanhel/Documents/TFG/ArchivosBioinformatics/"+archivo).st_size == 0: #Caso de que el HTML este vacio por errores de conexion
 			file_vol.close()
 			vacios.append(url,"\n")
 			continue
@@ -325,6 +347,6 @@ for tupla in volumenes: #Recorremos los volumenes
 		#Ya tenemos todos los datos de todas las URL de este Issue
 		#Vamos a crear un archvio csv con los datos que tenemos
 		tabla = pd.DataFrame(todos_datos, columns=["URLArticulo", "IDArticulo", "Titulo", "Autores", "DOI", "Abstract", "Herramienta", "Referencias"])
-		tabla.to_csv("/home/amanhel/prueba/Documents/TFG/ArchivosBioinformatics/Vol"+str(vol)+"Issue"+str(issue)+".csv", index = False)
+		tabla.to_csv("/home/amanhel/Documents/TFG/ArchivosBioinformatics/Vol"+str(vol)+"Issue"+str(issue)+".csv", index = False)
 		file_vol.close()
 		time.sleep(random.randrange(200,300))
