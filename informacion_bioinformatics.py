@@ -16,9 +16,8 @@ def articulos(file_issue):
 
 	articulos = []
 	for seccion in a:#Las secciones de los papers de la pagina de bioinformatics (Articles, Erratum, Application notes, etc)
-		seccion_text = seccion.text.upper()
-		if seccion.text == "APPLICATIONS NOTE" or seccion.text == "APPLICATIONS NOTES" or seccion.text == "APPLICATION NOTES" or seccion.text == "APPLICATION NOTE":
-			bloque =seccion.parent #Este es bloque con el primer sub-bloque de las application notes
+		if seccion.text.upper() == "APPLICATIONS NOTE" or seccion.text.upper() == "APPLICATIONS NOTES" or seccion.text.upper() == "APPLICATION NOTES" or seccion.text.upper() == "APPLICATION NOTE":
+			bloque = seccion.parent #Este es bloque con el primer sub-bloque de las application notes
             
 			for articulo in bloque.find_all("div", class_ = "al-article-items"):#Encuentra los diferentes articulos del primer sub-apartado
 				referencia = articulo.find("div", class_="ww-citation-primary")
