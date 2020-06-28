@@ -1,91 +1,5 @@
 #Script va a poner la informacion adicional a los archviso obtenido de obtencion_info_disponibilidad+muerte.py
 import pandas as pd
-from datetime import datetime
-
-#Funciones necesarias para que el programa principal funcione
-def diasHastaFecha(day1, month1, year1, day2, month2, year2):
-#Funcion que nos da los dias entre 2 fechas
-    # Función para calcular si un año es bisiesto o no
-    
-    def esBisiesto(year):
-        return year % 4 == 0 and year % 100 != 0 or year % 400 == 0
-    
-    # Caso de años diferentes
-    
-    if (year1<year2):
-        
-        # Días restante primer año
-        
-        if esBisiesto(year1) == False:
-            diasMes = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        else:
-            diasMes = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-     
-        restoMes = diasMes[month1] - day1
-    
-        restoYear = 0
-        i = month1 + 1
-    
-        while i <= 12:
-            restoYear = restoYear + diasMes[i]
-            i = i + 1
-    
-        primerYear = restoMes + restoYear
-    
-        # Suma de días de los años que hay en medio
-    
-        sumYear = year1 + 1
-        totalDias = 0
-    
-        while (sumYear<year2):
-            if esBisiesto(sumYear) == False:
-                totalDias = totalDias + 365
-                sumYear = sumYear + 1
-            else:
-                totalDias = totalDias + 366
-                sumYear = sumYear + 1
-    
-        # Dias año actual
-    
-        if esBisiesto(year2) == False:
-            diasMes = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        else:
-            diasMes = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    
-        llevaYear = 0
-        lastYear = 0
-        i = 1
-    
-        while i < month2:
-            llevaYear = llevaYear + diasMes[i]
-            i = i + 1
-    
-        lastYear = day2 + llevaYear
-    
-        return totalDias + primerYear + lastYear
-    
-    # Si estamos en el mismo año
-    
-    else:
-        
-        if esBisiesto(year1) == False:
-            diasMes = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        else:
-            diasMes = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    
-        llevaYear = 0
-        total = 0
-        i = month1
-        
-        if i < month2:
-            while i < month2:
-                llevaYear = llevaYear + diasMes[i]
-                i = i + 1
-            total = day2 + llevaYear - 1
-            return total 
-        else:
-            total = day2 - day1
-            return total
 
 data_bio_ftp = pd.read_csv("/home/amanhel/Documents/ArchivosBioinformatics/ftps_bio_muerte.csv")
 data_bio_http = pd.read_csv("/home/amanhel/Documents/ArchivosBioinformatics/https_bio_muerte.csv")
@@ -152,8 +66,8 @@ for c in range(0, len(data_nar_http.index)):
 			continue
 
 
-for d in range(0, len(data_nar_ftps.index)):
-	row = data_ftps.iloc[d]
+for d in range(0, len(data_nar_ftp.index)):
+	row = data_ftp.iloc[d]
 	id_url = row["ID"]
 	años = list(volumenes.keys())
 	for entrada in años: #Recorremos el diccionario
