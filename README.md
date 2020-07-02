@@ -21,7 +21,7 @@ A continuación se da un resumen de lo que desempeña cada código en el orden q
 
 7. analisis_supervivencia_KM.r --> Realizacion del analisis de supervivencia con el estiadmor Kaplan-Meier de todos los datos y respecto a las revistas
 
-8. analisis_KM_citaciones --> Realizacion del analisis de supervivencia con el estimador KAplan-Meier respecto a las citaciones
+8. analisis_KM_citaciones.r --> Realizacion del analisis de supervivencia con el estimador KAplan-Meier respecto a las citaciones
 
 9. datos_analisis_turnbull.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Turnbull 
 
