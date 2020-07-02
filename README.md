@@ -19,12 +19,14 @@ A continuación se da un resumen de lo que desempeña cada código en el orden q
 
 6. datos_analisis_KM.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Kaplan-Meier
 
-7. analisis_supervivencia_KM.r --> Realizacion del analisis de supervivencia con el estiadmor Kaplan-Meier de todos los datos, respecto a las revistas y respecto al numero de citaciones
+7. analisis_supervivencia_KM.r --> Realizacion del analisis de supervivencia con el estiadmor Kaplan-Meier de todos los datos y respecto a las revistas
 
-8. datos_analisis_turnbull.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Turnbull 
+8. analisis_KM_citaciones --> Realizacion del analisis de supervivencia con el estimador KAplan-Meier respecto a las citaciones
 
-9. analisis_supervencia_turnbull.r --> Realizacion del analisis de supervivencia con el estiadmor Turnbull de todos los datos
+9. datos_analisis_turnbull.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Turnbull 
 
-10. creador_ref_herr_muertas.py --> Este codigo crea el formato necesario para el siguiente paso. Para ello crea archivos para cada herramienta con el numero de referencias a las herramientas por año
+10. analisis_supervencia_turnbull.r --> Realizacion del analisis de supervivencia con el estiadmor Turnbull de todos los datos
 
-11. citaciones_predictor_muerte.r --> Analiza si el patro temporal de citaciones es un predictor de muerte de las herrameinats en un tiempo proximo
+11. creador_ref_herr_muertas.py --> Este codigo crea el formato necesario para el siguiente paso. Para ello crea archivos para cada herramienta con el numero de referencias a las herramientas por año
+
+12. citaciones_predictor_muerte.r --> Analiza si el patro temporal de citaciones es un predictor de muerte de las herrameinats en un tiempo proximo
