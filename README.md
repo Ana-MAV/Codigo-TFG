@@ -19,14 +19,17 @@ A continuación se da un resumen de lo que desempeña cada código en el orden q
 
 6. datos_analisis_KM.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Kaplan-Meier
 
+
 7. analisis_supervivencia_KM.r --> Realizacion del analisis de supervivencia con el estiadmor Kaplan-Meier de todos los datos y respecto a las revistas
 
-8. analisis_KM_citaciones.r --> Realizacion del analisis de supervivencia con el estimador KAplan-Meier respecto a las citaciones
+8.relativizando_citaciones.py --> Preparamos los datos de las citaciones quitando las citaciones que se han producido despues de la muerte de la herramienta
 
-9. datos_analisis_turnbull.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Turnbull 
+9. analisis_KM_citaciones.r --> Realizacion del analisis de supervivencia con el estimador KAplan-Meier respecto a las citaciones
 
-10. analisis_supervencia_turnbull.r --> Realizacion del analisis de supervivencia con el estiadmor Turnbull de todos los datos
+10. datos_analisis_turnbull.py --> Filtrado de los datos para adecuarlos al analisis de supervivencia con el estimador Turnbull 
 
-11. creador_ref_herr_muertas.py --> Este codigo crea el formato necesario para el siguiente paso. Para ello crea archivos para cada herramienta con el numero de referencias a las herramientas por año
+11. analisis_supervencia_turnbull.r --> Realizacion del analisis de supervivencia con el estiadmor Turnbull de todos los datos
 
-12. citaciones_predictor_muerte.r --> Analiza si el patro temporal de citaciones es un predictor de muerte de las herrameinats en un tiempo proximo
+12. creador_ref_herr_muertas.py --> Este codigo crea el formato necesario para el siguiente paso. Para ello crea archivos para cada herramienta con el numero de referencias a las herramientas por año
+
+13. citaciones_predictor_muerte.r --> Analiza si el patro temporal de citaciones es un predictor de muerte de las herrameinats en un tiempo proximo
