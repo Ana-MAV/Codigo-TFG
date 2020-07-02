@@ -191,3 +191,49 @@ surv_diff_cuantiles_max_rel <- survdiff(Surv(dias_max, Censored) ~ GrupoCuantile
 surv_diff_cuantiles_min_rel
 surv_diff_cuantiles_rel
 surv_diff_cuantiles_max_rel
+
+#Vamos a haer el analisis del 75% de las citaciones relativizadas
+
+surv_mediana_min_rel_75 <- survfit(Surv(dias_max, Censored) ~ GrupoMedianaMinRel75, data=datos_grupos)
+a4 <- ggsurvplot(surv_mediana_min_rel_75,
+                 palette = c("skyblue4","chocolate3"),
+                 conf.int = TRUE,
+                 censor =TRUE,
+                 legend = "right",
+                 legend.title = "Set de datos",
+                 ggtheme = theme_gray(),
+                 title = "A)",
+                 legend.labs=c("Datos menor o igual a 0.0157","Datos mayores a 0.0157"))+
+  labs(x="Dias",y="S(t)")
+
+surv_mediana_med_rel_75 <- survfit(Surv(dias_max, Censored) ~ GrupoMedianaMedRel75, data=datos_grupos)
+b4 <- ggsurvplot(surv_mediana_med_rel_75,
+                 palette = c("skyblue4","chocolate3"),
+                 conf.int = TRUE,
+                 censor =TRUE,
+                 legend = "right",
+                 legend.title = "Set de datos",
+                 ggtheme = theme_gray(),
+                 title = "B)",
+                 legend.labs=c("Datos menor o igual a 0.0157","Datos mayores a 0.0157"))+
+  labs(x="Dias",y="S(t)")
+
+surv_mediana_max_rel_75 <- survfit(Surv(dias_max, Censored) ~ GrupoMedianaMaxRel75, data=datos_grupos)
+c4 <- ggsurvplot(surv_mediana_max_rel_75,
+                 palette = c("skyblue4","chocolate3"),
+                 conf.int = TRUE,
+                 censor =TRUE,
+                 legend = "right",
+                 legend.title = "Set de datos",
+                 ggtheme = theme_gray(),
+                 title = "C)",
+                 legend.labs=c("Datos menor o igual a 0.0152","Datos mayores a 0.0152"))+
+  labs(x="Dias",y="S(t)")
+
+#Vamos a hacer los test log-rank
+surv_diff_mediana_min_rel_75 <- survdiff(Surv(dias_min, Censored) ~ GrupoMedianaMinRel75, data = datos_grupos)
+surv_diff_mediana_rel_75 <- survdiff(Surv(dias_media, Censored) ~ GrupoMedianaMedRel75, data = datos_grupos)
+surv_diff_mediana_max_rel_75 <- survdiff(Surv(dias_max, Censored) ~ GrupoMedianaMaxRel75, data = datos_grupos)
+surv_diff_mediana_min_rel_75
+surv_diff_mediana_rel_75
+surv_diff_mediana_max_rel_75
